@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#87d7f5">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Sky Hopper">
+  <title>Sky Hopper — Skybound Adventure</title>
+  <link rel="icon" href="icons/sky-hopper.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/sky-hopper.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <header class="game-header">
+      <a class="brand" href="#" aria-label="Sky Hopper home">
+        <span class="brand-icon" aria-hidden="true">✈</span>
+        <span>SKY HOPPER</span>
+      </a>
+      <div class="header-actions">
+        <p class="tagline">100 stages · 3 spectacular sceneries</p>
+        <button class="install-button" id="install-button" type="button" hidden>
+          <span aria-hidden="true">↓</span>
+          <span>Install app</span>
+        </button>
+        <button class="music-toggle" id="music-toggle" type="button" aria-pressed="true" aria-label="Turn music off">
+          <span class="music-icon" id="music-icon" aria-hidden="true">♫</span>
+          <span id="music-label">Music on</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="game-card" aria-label="Sky Hopper game">
+      <div class="game-topline">
+        <div>
+          <p class="eyebrow" id="world-name">SCENERY 1 · EMERALD ISLES</p>
+          <h1 id="stage-title">The First Flight</h1>
+        </div>
+        <div class="score-board" aria-label="Game score">
+          <div class="score-item">
+            <span class="score-label">SCORE</span>
+            <span class="score-value" id="score">0</span>
+          </div>
+          <span class="score-divider" aria-hidden="true"></span>
+          <div class="score-item">
+            <span class="score-label">BEST</span>
+            <span class="score-value best-value" id="best">0</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="campaign-panel" aria-label="Adventure progress">
+        <div class="stage-progress">
+          <div class="stage-progress-label">
+            <span id="stage-label">STAGE 1 OF 100</span>
+            <span id="gate-progress-label">0 / 5 gates</span>
+          </div>
+          <div class="progress-track" role="progressbar" id="stage-progress" aria-label="Stage progress" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+            <span id="progress-fill"></span>
+          </div>
+        </div>
+        <div class="side-quest" id="side-quest">
+          <span class="quest-icon" aria-hidden="true">✦</span>
+          <div class="quest-copy">
+            <span class="quest-kicker">SIDE QUEST</span>
+            <span class="quest-description" id="quest-description">Collect 3 sky stars</span>
+          </div>
+          <span class="quest-count" id="quest-count">0 / 3</span>
+        </div>
+      </section>
+
+      <div class="canvas-wrap" id="canvas-wrap">
+        <canvas id="game" width="800" height="500" aria-label="Game area. Tap to take off, then tap to climb."></canvas>
+        <div class="game-overlay" id="overlay">
+          <div class="overlay-card">
+            <span class="overlay-icon" id="overlay-icon" aria-hidden="true">✈️</span>
+            <p class="overlay-kicker" id="overlay-kicker">YOUR ADVENTURE STARTS HERE</p>
+            <h2 id="overlay-title">Ready, pilot?</h2>
+            <p class="overlay-copy" id="overlay-copy">A sky-high adventure is waiting! Fly through 5 gates, scoop up 3 bonus stars, and discover a brand-new world every few stages.</p>
+            <button class="play-button" id="play-button" type="button">
+              <span id="button-label">Take off</span>
+              <span aria-hidden="true">→</span>
+            </button>
+            <p class="keyboard-hint">Tap anywhere to fly <span aria-hidden="true">·</span> or press <kbd>SPACE</kbd></p>
+          </div>
+        </div>
+        <div class="game-toast" id="game-toast" aria-hidden="true"></div>
+        <div class="live-message" id="live-message" aria-live="polite"></div>
+      </div>
+
+      <details class="flight-map">
+        <summary>
+          <span>🗺️</span>
+          <span>Adventure map</span>
+          <span class="map-progress" id="map-progress">Stage 1 unlocked</span>
+        </summary>
+        <p class="map-description">Fly through three spectacular sceneries. Choose any stage you've unlocked.</p>
+        <div class="stage-grid" id="stage-grid" aria-label="100 adventure stages"></div>
+      </details>
+
+      <section class="online-panel" aria-label="Player account and leaderboard">
+        <div class="online-heading">
+          <div>
+            <p class="eyebrow">YOUR ADVENTURE, SAVED</p>
+            <h2>Player account</h2>
+          </div>
+          <span class="backend-status" id="backend-status" role="status">Checking game server…</span>
+        </div>
+        <div class="online-columns">
+          <div class="account-area">
+            <form class="account-form" id="auth-form">
+              <label for="username">Pilot name</label>
+              <input id="username" name="username" type="text" minlength="3" maxlength="20"
+                pattern="[A-Za-z0-9_]{3,20}" autocomplete="username" required>
+              <label for="password">Password</label>
+              <input id="password" name="password" type="password" minlength="10" maxlength="128"
+                autocomplete="current-password" required>
+              <div class="auth-actions">
+                <button class="account-button account-button-primary" type="submit" value="login">Sign in</button>
+                <button class="account-button" type="submit" value="register">Create account</button>
+              </div>
+            </form>
+            <div class="signed-in" id="signed-in" hidden>
+              <span class="pilot-badge" aria-hidden="true">✈</span>
+              <div class="signed-in-copy">
+                <span class="signed-in-label">SIGNED IN AS</span>
+                <strong id="account-name"></strong>
+                <span id="sync-status">Your progress is synced.</span>
+              </div>
+              <button class="account-button" id="logout-button" type="button">Sign out</button>
+            </div>
+            <p class="account-message" id="account-message" aria-live="polite"></p>
+          </div>
+          <div class="leaderboard">
+            <div class="leaderboard-heading">
+              <h3>✦ Pilot leaderboard</h3>
+              <button class="refresh-button" id="refresh-leaderboard" type="button" aria-label="Refresh leaderboard">↻</button>
+            </div>
+            <ol class="leaderboard-list" id="leaderboard-list">
+              <li class="leaderboard-empty">Connect to the game server to see pilots.</li>
+            </ol>
+          </div>
+        </div>
+        <p class="account-footnote">Create an account to carry your unlocked stages and side-quest badges across devices.</p>
+      </section>
+
+      <footer class="game-footer">
+        <span class="instruction-icon" aria-hidden="true">↗</span>
+        <p><strong>Click or tap</strong> to give your plane a boost</p>
+        <span class="footer-dot" aria-hidden="true"></span>
+        <p>Explore three worlds and unlock new stages</p>
+      </footer>
+    </section>
+
+    <p class="page-note">Take a breath, find your rhythm, and enjoy the ride.</p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

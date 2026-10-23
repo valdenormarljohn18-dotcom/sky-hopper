@@ -1,0 +1,23 @@
+{
+  "id": "./",
+  "name": "Sky Hopper: Skybound Adventure",
+  "short_name": "Sky Hopper",
+  "description": "Fly through 100 stages and three spectacular sceneries in this sky-high adventure.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#f0f8f6",
+  "theme_color": "#87d7f5",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "./icons/sky-hopper.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
