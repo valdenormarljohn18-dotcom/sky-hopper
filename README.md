@@ -25,6 +25,8 @@ when offered (or open the browser menu and choose **Install app** or
 The first visit downloads the game shell; after that, the adventure can be
 played offline. Account sign-in, cloud progress sync, and the leaderboard need
 an internet connection and a reachable backend.
+Use the fullscreen icon in the game header to expand the play interface;
+press Escape or tap the icon again to return.
 
 ## Publish with GitHub Pages
 

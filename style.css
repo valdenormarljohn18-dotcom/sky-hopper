@@ -149,6 +149,13 @@ button {
   color: #9aaca8;
 }
 
+.fullscreen-toggle {
+  width: 36px;
+  padding: 7px;
+  font-size: 18px;
+  line-height: 1;
+}
+
 .game-card {
   overflow: hidden;
   padding: 28px;
@@ -1018,6 +1025,95 @@ kbd {
   text-align: center;
 }
 
+.game-shell:fullscreen,
+.game-shell.is-fullscreen-fallback {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right))
+    max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+  overflow: hidden;
+  background: #f0f8f6;
+}
+
+.game-shell:fullscreen .game-header,
+.game-shell.is-fullscreen-fallback .game-header {
+  flex: 0 0 auto;
+  margin-bottom: clamp(8px, 2vh, 16px);
+}
+
+.game-shell:fullscreen .tagline,
+.game-shell.is-fullscreen-fallback .tagline,
+.game-shell:fullscreen .install-button,
+.game-shell.is-fullscreen-fallback .install-button,
+.game-shell:fullscreen .flight-map,
+.game-shell.is-fullscreen-fallback .flight-map,
+.game-shell:fullscreen .online-panel,
+.game-shell.is-fullscreen-fallback .online-panel,
+.game-shell:fullscreen .game-footer,
+.game-shell.is-fullscreen-fallback .game-footer,
+.game-shell:fullscreen .page-note,
+.game-shell.is-fullscreen-fallback .page-note {
+  display: none;
+}
+
+.game-shell:fullscreen .game-card,
+.game-shell.is-fullscreen-fallback .game-card {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: clamp(10px, 2vw, 20px);
+  border-radius: 16px;
+}
+
+.game-shell:fullscreen .game-topline,
+.game-shell.is-fullscreen-fallback .game-topline {
+  flex: 0 0 auto;
+  padding: 2px 2px 10px;
+}
+
+.game-shell:fullscreen .campaign-panel,
+.game-shell.is-fullscreen-fallback .campaign-panel {
+  flex: 0 0 auto;
+  grid-template-columns: minmax(0, 1fr) minmax(170px, 0.72fr);
+  gap: 12px;
+  margin-bottom: 10px;
+  padding: 9px 12px;
+}
+
+.game-shell:fullscreen .side-quest,
+.game-shell.is-fullscreen-fallback .side-quest {
+  padding: 0 0 0 12px;
+  border-top: 0;
+  border-left: 1px solid #e2ece9;
+}
+
+.game-shell:fullscreen .canvas-wrap,
+.game-shell.is-fullscreen-fallback .canvas-wrap {
+  display: grid;
+  min-height: 0;
+  flex: 1 1 auto;
+  place-items: center;
+  border-radius: 12px;
+}
+
+.game-shell:fullscreen canvas,
+.game-shell.is-fullscreen-fallback canvas {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  aspect-ratio: 8 / 5;
+  object-fit: contain;
+}
+
 @media (max-width: 620px) {
   .game-shell {
     width: min(100% - 24px, 1000px);
@@ -1046,6 +1142,13 @@ kbd {
     min-height: 34px;
     padding: 6px 8px;
     font-size: 10px;
+  }
+
+  .fullscreen-toggle {
+    width: 34px;
+    min-height: 34px;
+    padding: 6px;
+    font-size: 17px;
   }
 
   .game-card {
@@ -1156,6 +1259,12 @@ kbd {
     font-size: 9px;
   }
 
+  .fullscreen-toggle {
+    width: 32px;
+    min-height: 32px;
+    padding: 5px;
+  }
+
   .game-topline {
     align-items: center;
     gap: 8px;
@@ -1217,6 +1326,28 @@ kbd {
 
   .keyboard-hint {
     margin-top: 11px;
+  }
+}
+
+@media (max-width: 620px) {
+  .game-shell:fullscreen .campaign-panel,
+  .game-shell.is-fullscreen-fallback .campaign-panel {
+    grid-template-columns: minmax(0, 1fr) minmax(145px, 0.8fr);
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .game-shell:fullscreen .side-quest,
+  .game-shell.is-fullscreen-fallback .side-quest {
+    gap: 6px;
+    padding-left: 8px;
+  }
+
+  .game-shell:fullscreen .quest-icon,
+  .game-shell.is-fullscreen-fallback .quest-icon {
+    flex-basis: 26px;
+    width: 26px;
+    height: 26px;
   }
 }
 

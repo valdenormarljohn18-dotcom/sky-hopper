@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "sky-hopper-shell-v3";
+const CACHE_NAME = "sky-hopper-shell-v4";
 const APP_BASE_URL = new URL("./", self.registration.scope);
 const APP_SHELL = [
   "",

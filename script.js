@@ -25,6 +25,8 @@ const musicToggle = document.querySelector("#music-toggle");
 const musicLabel = document.querySelector("#music-label");
 const musicIcon = document.querySelector("#music-icon");
 const installButton = document.querySelector("#install-button");
+const fullscreenToggle = document.querySelector("#fullscreen-toggle");
+const gameShell = document.querySelector(".game-shell");
 const authForm = document.querySelector("#auth-form");
 const signedInPanel = document.querySelector("#signed-in");
 const accountName = document.querySelector("#account-name");
@@ -153,6 +155,35 @@ installButton.addEventListener("click", async () => {
     installButton.hidden = true;
   }
 });
+
+function updateFullscreenControl() {
+  const isFullscreen = document.fullscreenElement === gameShell ||
+    gameShell.classList.contains("is-fullscreen-fallback");
+  const label = isFullscreen ? "Exit fullscreen" : "Enter fullscreen";
+  fullscreenToggle.setAttribute("aria-pressed", String(isFullscreen));
+  fullscreenToggle.setAttribute("aria-label", label);
+  fullscreenToggle.title = label;
+}
+
+fullscreenToggle.addEventListener("click", async () => {
+  try {
+    if (document.fullscreenElement === gameShell) {
+      await document.exitFullscreen();
+    } else if (gameShell.classList.contains("is-fullscreen-fallback")) {
+      gameShell.classList.remove("is-fullscreen-fallback");
+    } else if (document.fullscreenEnabled && gameShell.requestFullscreen) {
+      await gameShell.requestFullscreen();
+    } else {
+      gameShell.classList.add("is-fullscreen-fallback");
+    }
+  } catch (error) {
+    console.error("Could not toggle fullscreen gameplay.", error);
+    liveMessage.textContent = "Fullscreen couldn't be enabled. Try your browser's fullscreen control.";
+  }
+  updateFullscreenControl();
+});
+
+document.addEventListener("fullscreenchange", updateFullscreenControl);
 
 function playMusicTone(frequency, startTime, duration, volume, type) {
   const oscillator = audioContext.createOscillator();
@@ -1195,6 +1226,11 @@ document.querySelector("#refresh-leaderboard").addEventListener("click", () => {
 });
 
 window.addEventListener("keydown", (event) => {
+  if (event.code === "Escape" && gameShell.classList.contains("is-fullscreen-fallback")) {
+    gameShell.classList.remove("is-fullscreen-fallback");
+    updateFullscreenControl();
+    return;
+  }
   if (event.code !== "Space" || event.repeat) return;
   if (event.target instanceof HTMLElement && event.target.closest("input, button")) return;
   event.preventDefault();
